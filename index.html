@@ -1,323 +1,1753 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIverse - AI Across Every Domain</title>
+    <meta name="description"
+        content="Nexus AI — a curated editorial directory of the most powerful AI tools across education, business, creativity, research, coding, video, and productivity.">
+    <meta name="theme-color" content="#1a1008">
+    <title>Nexus AI — Intelligence Across Every Domain</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,700&family=Cormorant+SC:wght@300;400;600;700&family=Jost:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --orange: #ED8F53;
+            --yellow: #F5D462;
+            --dark: #1a1008;
+            --dark2: #231507;
+            --text: #2a1a05;
+            --muted: #6b4f2e;
+            --light: #fff9ef;
+            --light2: #fff3dc;
+            --accent: #c4530a;
+            --grad: linear-gradient(135deg, #F07B1D 0%, #F5C842 100%);
+            --grad-h: linear-gradient(to right, rgb(237, 143, 83) 0%, rgb(247, 211, 101) 100%);
         }
 
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 120px 0 80px;
+        /* ── BASE ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Jost', sans-serif;
+            background: var(--light);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--orange);
+            outline-offset: 3px;
+        }
+
+        /* Skip link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 1rem;
+            background: var(--dark);
+            color: var(--yellow);
+            padding: 0.75rem 1.25rem;
+            font-family: 'Cormorant SC', serif;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            z-index: 10000;
+            transition: top 0.2s;
+        }
+
+        .skip-link:focus {
+            top: 1rem;
+        }
+
+        /* ══════════════════════════════════════════
+           INTRO ANIMATION OVERLAY
+        ══════════════════════════════════════════ */
+        #intro-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            pointer-events: all;
+            cursor: pointer;
+        }
+
+        #intro-overlay::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 50% at 50% 50%,
+                    rgba(240, 123, 29, 0.13) 0%,
+                    transparent 70%);
+            pointer-events: none;
+        }
+
+        .intro-rule {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(237, 143, 83, 0.6), transparent);
+            width: 0;
+            animation: ruleExpand 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+        }
+
+        .intro-rule.top {
+            top: 22%;
+        }
+
+        .intro-rule.bottom {
+            bottom: 22%;
+        }
+
+        @keyframes ruleExpand {
+            to {
+                width: min(520px, 80vw);
+            }
+        }
+
+        .intro-corner {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            border-color: rgba(237, 143, 83, 0.5);
+            border-style: solid;
+            opacity: 0;
+            animation: cornerFade 0.5s ease 0.9s forwards;
+        }
+
+        .intro-corner.tl {
+            top: calc(22% - 14px);
+            left: calc(50% - min(260px, 40vw) - 14px);
+            border-width: 1px 0 0 1px;
+        }
+
+        .intro-corner.tr {
+            top: calc(22% - 14px);
+            right: calc(50% - min(260px, 40vw) - 14px);
+            border-width: 1px 1px 0 0;
+        }
+
+        .intro-corner.bl {
+            bottom: calc(22% - 14px);
+            left: calc(50% - min(260px, 40vw) - 14px);
+            border-width: 0 0 1px 1px;
+        }
+
+        .intro-corner.br {
+            bottom: calc(22% - 14px);
+            right: calc(50% - min(260px, 40vw) - 14px);
+            border-width: 0 1px 1px 0;
+        }
+
+        @keyframes cornerFade {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .intro-eyebrow {
+            font-family: 'Cormorant SC', serif;
+            font-size: 0.68rem;
+            letter-spacing: 6px;
+            color: var(--orange);
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeUp 0.7s ease 0.7s forwards;
+            margin-bottom: 0.6rem;
+            text-align: center;
+        }
+
+        .intro-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(4rem, 14vw, 8rem);
+            font-weight: 700;
+            line-height: 1;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            letter-spacing: -2px;
+            animation: brandReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+            text-align: center;
+        }
+
+        @keyframes brandReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(24px) skewY(2deg);
+                filter: blur(8px);
+            }
+
+            60% {
+                opacity: 1;
+                filter: blur(0);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) skewY(0);
+                filter: blur(0);
+            }
+        }
+
+        .intro-tagline {
+            font-family: 'Cormorant SC', serif;
+            font-size: clamp(0.7rem, 2vw, 0.88rem);
+            letter-spacing: 4px;
+            color: rgba(232, 213, 176, 0.7);
+            opacity: 0;
+            transform: translateY(8px);
+            animation: fadeUp 0.8s ease 1.5s forwards;
+            text-align: center;
+            margin-top: 0.9rem;
+        }
+
+        .intro-progress-wrap {
+            position: absolute;
+            bottom: 26%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(200px, 50vw);
+            height: 1px;
+            background: rgba(237, 143, 83, 0.15);
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 0.4s ease 1.2s forwards;
+        }
+
+        .intro-progress-fill {
+            height: 100%;
+            width: 0;
+            background: var(--grad);
+            animation: progressFill 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1.3s forwards;
+        }
+
+        @keyframes progressFill {
+            to {
+                width: 100%;
+            }
+        }
+
+        .intro-skip-hint {
+            position: absolute;
+            bottom: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Cormorant SC', serif;
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            color: rgba(232, 213, 176, 0.35);
+            opacity: 0;
+            animation: fadeIn 0.5s ease 2s forwards;
+        }
+
+        .intro-dot {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--orange);
+            opacity: 0;
+            animation: dotPulse 2s ease infinite;
+        }
+
+        @keyframes dotPulse {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            50% {
+                opacity: 0.35;
+                transform: scale(1);
+            }
+        }
+
+        #intro-overlay.exit {
+            animation: overlayExit 0.9s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+        }
+
+        @keyframes overlayExit {
+            0% {
+                clip-path: inset(0 0 0 0);
+                opacity: 1;
+            }
+
+            100% {
+                clip-path: inset(0 0 100% 0);
+                opacity: 1;
+            }
+        }
+
+        body.intro-active {
+            overflow: hidden;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            background: var(--dark) !important;
+            border-bottom: 2px solid var(--orange);
+            transition: box-shadow 0.3s;
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .navbar-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.9rem !important;
+            font-weight: 700;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-link {
-            font-weight: 500;
-            transition: all 0.3s;
+            font-family: 'Cormorant SC', serif;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            font-size: 0.82rem;
+            color: #e8d5b0 !important;
+            transition: color 0.25s, transform 0.25s;
+            position: relative;
+            padding-bottom: 4px !important;
         }
 
-        .nav-link:hover {
-            color: #667eea !important;
-            transform: translateY(-2px);
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: var(--grad);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus-visible {
+            color: #F5C842 !important;
+            transform: translateY(-1px);
+        }
+
+        .nav-link:hover::after,
+        .nav-link:focus-visible::after {
+            width: 100%;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            background: var(--grad-h);
+            color: var(--dark);
+            padding: 160px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            top: -250px;
+            right: -200px;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            bottom: -200px;
+            left: -100px;
+            animation: pulse 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3.5rem, 8vw, 5.5rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .hero-sub {
+            font-family: 'Cormorant SC', serif;
+            font-size: clamp(0.9rem, 2vw, 1.25rem);
+            letter-spacing: 3px;
+            color: rgba(26, 16, 8, 0.75);
+        }
+
+        .btn-hero {
+            background: var(--dark);
+            color: var(--yellow);
+            font-family: 'Cormorant SC', serif;
+            letter-spacing: 3px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 0;
+            transition: all 0.3s;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .btn-hero:hover,
+        .btn-hero:focus-visible {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ── STATS STRIP ── */
+        .stats-strip {
+            background: var(--dark);
+            padding: 28px 0;
+            border-bottom: 1px solid rgba(237, 143, 83, 0.2);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .stat-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-family: 'Cormorant SC', serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: rgba(232, 213, 176, 0.55);
+            margin-top: 4px;
+        }
+
+        .stat-divider {
+            width: 1px;
+            background: rgba(237, 143, 83, 0.25);
+            height: 48px;
+            margin: auto;
+        }
+
+        /* ── SECTIONS ── */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-alt {
+            background: linear-gradient(180deg, var(--light2) 0%, #ffe9c0 100%);
+        }
+
+        .section-header {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-eyebrow {
+            font-family: 'Cormorant SC', serif;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            color: var(--orange);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
         }
 
         .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            color: var(--dark);
+            line-height: 1.1;
             position: relative;
             display: inline-block;
         }
 
-        .section-title:after {
+        .section-title::after {
             content: '';
             position: absolute;
-            width: 60px;
+            width: 50px;
             height: 3px;
-            background: #667eea;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
+            background: var(--grad);
+            bottom: -10px;
+            left: 0;
+            border-radius: 2px;
         }
 
+        .section-desc {
+            font-size: 0.95rem;
+            color: var(--muted);
+            max-width: 480px;
+            line-height: 1.8;
+            margin-top: 1.5rem;
+        }
+
+        /* ── CARDS ── */
         .ai-card {
-            transition: all 0.4s;
             border: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-radius: 2px;
+            background: #fff;
+            box-shadow: 0 2px 16px rgba(240, 123, 29, 0.06);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-bottom: 3px solid transparent;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .ai-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 24px 48px rgba(240, 123, 29, 0.16);
+            border-bottom-color: var(--orange);
         }
 
-        .icon-circle {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+        .ai-card:hover .card-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .card-body {
+            padding: 2rem 1.75rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-icon {
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
+            background: var(--grad);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            margin-bottom: 1.1rem;
+            color: var(--dark);
+            font-size: 1.05rem;
+            flex-shrink: 0;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card-title-text {
+            font-family: 'Cormorant SC', serif;
+            font-size: 1rem;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.55rem;
+            line-height: 1.3;
+        }
+
+        .card-desc {
+            font-size: 0.83rem;
+            color: #7a6040;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .card-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: auto;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(237, 143, 83, 0.15);
+        }
+
+        .tool-tag {
+            display: inline-block;
+            font-family: 'Cormorant SC', serif;
+            font-size: 0.68rem;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: var(--accent);
+            background: rgba(237, 143, 83, 0.1);
+            padding: 3px 9px;
+            border-radius: 1px;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+            white-space: nowrap;
+        }
+
+        .tool-tag:hover,
+        .tool-tag:focus-visible {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        /* ── FEATURED CALLOUT ── */
+        .callout {
+            background: var(--dark);
+            border-left: 4px solid var(--orange);
+            padding: 3rem 2.5rem;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .callout::before {
+            content: '"';
+            position: absolute;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18rem;
+            line-height: 1;
+            color: rgba(237, 143, 83, 0.05);
+            top: -3rem;
+            left: 1rem;
+            pointer-events: none;
+        }
+
+        .callout p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: #e8d5b0;
+            line-height: 1.6;
+            margin: 0;
+            font-style: italic;
+            position: relative;
+        }
+
+        .callout cite {
+            display: block;
+            margin-top: 1rem;
+            font-family: 'Cormorant SC', serif;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: var(--orange);
+            font-style: normal;
+        }
+
+        /* ── BACK TO TOP ── */
+        #back-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 44px;
+            height: 44px;
+            background: var(--dark);
+            color: var(--yellow);
+            border: 2px solid var(--orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s, background 0.3s;
+            z-index: 999;
+            border-radius: 0;
+        }
+
+        #back-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #back-top:hover,
+        #back-top:focus-visible {
+            transform: translateY(-3px);
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--dark);
+            color: #e8d5b0;
+            padding: 4rem 0 2.5rem;
+            border-top: 3px solid var(--orange);
+        }
+
+        footer .brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        footer .tagline {
+            font-family: 'Cormorant SC', serif;
+            letter-spacing: 2.5px;
+            font-size: 0.72rem;
+            color: rgba(232, 213, 176, 0.5);
+        }
+
+        footer .footer-link {
+            font-family: 'Cormorant SC', serif;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            color: rgba(232, 213, 176, 0.6);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 6px;
+            transition: color 0.2s;
+        }
+
+        footer .footer-link:hover,
+        footer .footer-link:focus-visible {
+            color: var(--yellow);
+        }
+
+        .footer-section-title {
+            font-family: 'Cormorant SC', serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--orange);
+            margin-bottom: 1rem;
+        }
+
+        .footer-divider {
+            border-color: rgba(237, 143, 83, 0.15);
+            margin: 2.5rem 0 1.5rem;
+        }
+
+        .footer-copy {
+            font-family: 'Cormorant SC', serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: rgba(232, 213, 176, 0.35);
+        }
+
+        /* ── FADE-IN ON SCROLL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .reveal-delay-1 {
+            transition-delay: 0.1s;
+        }
+
+        .reveal-delay-2 {
+            transition-delay: 0.2s;
+        }
+
+        .reveal-delay-3 {
+            transition-delay: 0.3s;
+        }
+
+        /* ── REDUCED-MOTION SUPPORT ── */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hero {
+                padding: 130px 0 80px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .stat-divider {
+                display: none;
+            }
         }
     </style>
 </head>
 
-<body>
+<body class="intro-active">
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <!-- Skip link (accessibility) -->
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <!-- ══════════════════════════════════════════
+         INTRO / SPLASH ANIMATION
+    ══════════════════════════════════════════ -->
+    <div id="intro-overlay" aria-hidden="true" role="presentation">
+
+        <div class="intro-rule top"></div>
+        <div class="intro-rule bottom"></div>
+
+        <div class="intro-corner tl"></div>
+        <div class="intro-corner tr"></div>
+        <div class="intro-corner bl"></div>
+        <div class="intro-corner br"></div>
+
+        <div class="intro-dot"
+            style="width:3px;height:3px;top:30%;left:18%;animation-delay:0.4s;animation-duration:3.1s;"></div>
+        <div class="intro-dot"
+            style="width:2px;height:2px;top:65%;left:82%;animation-delay:1.1s;animation-duration:2.7s;"></div>
+        <div class="intro-dot"
+            style="width:4px;height:4px;top:72%;left:22%;animation-delay:0.8s;animation-duration:3.5s;"></div>
+        <div class="intro-dot"
+            style="width:2px;height:2px;top:28%;left:75%;animation-delay:1.6s;animation-duration:2.9s;"></div>
+
+        <div style="position:relative;z-index:2;text-align:center;padding:0 1rem;">
+            <div class="intro-eyebrow">Intelligence Across Every Domain</div>
+            <div class="intro-brand">Nexus AI</div>
+            <div class="intro-tagline">Connecting the Future of Artificial Intelligence</div>
+        </div>
+
+        <div class="intro-progress-wrap">
+            <div class="intro-progress-fill"></div>
+        </div>
+
+        <div class="intro-skip-hint">CLICK OR PRESS ANY KEY TO SKIP</div>
+
+    </div>
+
+    <!-- BACK TO TOP -->
+    <button id="back-top" aria-label="Back to top" type="button">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="navbar" aria-label="Primary">
         <div class="container">
-            <a class="navbar-brand fw-bold fs-3" href="#">AIverse</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <a class="navbar-brand fw-bold" href="#">Nexus AI</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto gap-lg-1 align-items-lg-center">
                     <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
                     <li class="nav-item"><a class="nav-link" href="#business">Business</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#jobs">Jobs</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#job-seeking">Job Seeking</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#job-seeking">Jobs</a></li>
                     <li class="nav-item"><a class="nav-link" href="#creativity">Creativity</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#research">Research & Science</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#coding">Coding</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#video-voice">Video</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#productivity">Productivity</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#research">Research</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero text-center">
-        <div class="container">
-            <h1 class="display-4 fw-bold mb-3">AI Powering Every Aspect of Life</h1>
-            <p class="lead mb-4">Discover how Artificial Intelligence is transforming Education, Business, Careers,
-                Creativity, and Science.</p>
-            <a href="#education" class="btn btn-light btn-lg">Explore Domains</a>
+    <main id="main">
+
+        <!-- HERO -->
+        <section class="hero text-center">
+            <div class="container hero-inner">
+                <div class="reveal">
+                    <h1 class="mb-3">Nexus AI</h1>
+                    <p class="hero-sub mb-5">Connecting Intelligence Across Every Domain of Life</p>
+                    <button class="btn-hero" id="random-ai-btn" type="button">
+                        <i class="fas fa-shuffle me-2" aria-hidden="true" style="font-size:0.8rem;"></i>Random AI
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS STRIP -->
+        <div class="stats-strip">
+            <div class="container">
+                <div class="row align-items-center g-3">
+                    <div class="col">
+                        <div class="stat-item">
+                            <div class="stat-num" id="stat-domains">8</div>
+                            <div class="stat-label">Domains Covered</div>
+                        </div>
+                    </div>
+                    <div class="col-auto d-none d-md-block">
+                        <div class="stat-divider"></div>
+                    </div>
+                    <div class="col">
+                        <div class="stat-item">
+                            <div class="stat-num" id="stat-tools">80+</div>
+                            <div class="stat-label">AI Tools Curated</div>
+                        </div>
+                    </div>
+                    <div class="col-auto d-none d-md-block">
+                        <div class="stat-divider"></div>
+                    </div>
+                    <div class="col">
+                        <div class="stat-item">
+                            <div class="stat-num" id="stat-usecases">24</div>
+                            <div class="stat-label">Use Cases</div>
+                        </div>
+                    </div>
+                    <div class="col-auto d-none d-md-block">
+                        <div class="stat-divider"></div>
+                    </div>
+                    <div class="col">
+                        <div class="stat-item">
+                            <div class="stat-num">∞</div>
+                            <div class="stat-label">Possibilities</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
 
-    <!-- Main Content -->
-    <div class="container my-5">
-
-        <!-- AI in Education -->
-        <section id="education" class="mb-5">
-            <h2 class="section-title text-center mb-5 display-5">AI in Education</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card ai-card h-100">
-                        <div class="card-body text-center">
-                            <div class="icon-circle mx-auto mb-3">📚</div>
-                            <h5>Personalized Learning</h5>
-                            <p>Adaptive platforms like Duolingo, Khan Academy AI, and Century Tech adjust content to
-                                each student's pace.</p>
-                        </div>
+        <!-- ═══════════════════════════════════ EDUCATION ═══════════════════════════════════ -->
+        <section id="education">
+            <div class="container">
+                <div class="row align-items-end mb-5 section-header">
+                    <div class="col-lg-6 reveal">
+                        <span class="section-eyebrow">01 / Domain</span>
+                        <h2 class="section-title">AI in Education</h2>
+                        <p class="section-desc">From personalized lesson plans to instant feedback, AI is redefining how
+                            students learn and how educators teach — at every level.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card ai-card h-100">
-                        <div class="card-body text-center">
-                            <div class="icon-circle mx-auto mb-3">✍️</div>
-                            <h5>Automated Grading</h5>
-                            <p>Tools like Gradescope and Turnitin use AI to grade essays and detect plagiarism
-                                instantly.</p>
+                <div class="row g-4">
+                    <div class="col-md-4 reveal reveal-delay-1">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Personalized Learning</h3>
+                                <p class="card-desc">Adaptive platforms that tailor content, pacing, and difficulty to
+                                    each
+                                    individual student's progress and learning style in real time.</p>
+                                <div class="card-tools">
+                                    <a href="https://www.khanmigo.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Khanmigo</a>
+                                    <a href="https://www.century.tech" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Century Tech</a>
+                                    <a href="https://squirrelai.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Squirrel AI</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card ai-card h-100">
-                        <div class="card-body text-center">
-                            <div class="icon-circle mx-auto mb-3">🤖</div>
-                            <h5>AI Tutors</h5>
-                            <p>ChatGPT Edu, Khanmigo, and Socratic provide 24/7 personalized tutoring.</p>
+                    <div class="col-md-4 reveal reveal-delay-2">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-check-double" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Automated Grading & Feedback</h3>
+                                <p class="card-desc">AI evaluates essays, code, and exams instantly — giving detailed,
+                                    constructive feedback that would take a human instructor hours to produce.</p>
+                                <div class="card-tools">
+                                    <a href="https://www.gradescope.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Gradescope</a>
+                                    <a href="https://www.turnitin.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Turnitin</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal reveal-delay-3">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-robot" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">AI Tutoring Assistants</h3>
+                                <p class="card-desc">Conversational AI tutors available 24/7 to answer questions,
+                                    explain
+                                    concepts, and walk students through problems step by step.</p>
+                                <div class="card-tools">
+                                    <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">ChatGPT</a>
+                                    <a href="https://claude.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Claude</a>
+                                    <a href="https://www.khanmigo.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Khanmigo</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- AI in Business -->
-        <section id="business" class="mb-5 bg-light py-5 rounded-4">
-            <h2 class="section-title text-center mb-5 display-5">AI in Business</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card ai-card h-100">
-                        <div class="card-body text-center">
-                            <div class="icon-circle mx-auto mb-3">📊</div>
-                            <h5>Analytics & Insights</h5>
-                            <p>Predictive analytics, customer behavior forecasting, and market trend analysis.</p>
-                        </div>
+        <!-- ═══════════════════════════════════ BUSINESS ═══════════════════════════════════ -->
+        <section id="business" class="section-alt">
+            <div class="container">
+                <div class="row align-items-end mb-5 section-header">
+                    <div class="col-lg-6 reveal">
+                        <span class="section-eyebrow">02 / Domain</span>
+                        <h2 class="section-title">AI in Business</h2>
+                        <p class="section-desc">Enterprises are leveraging AI to extract insights from data, automate
+                            repetitive workflows, and make faster, smarter decisions at scale.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card ai-card h-100">
-                        <div class="card-body text-center">
-                            <div class="icon-circle mx-auto mb-3">🤖</div>
-                            <h5>Automation</h5>
-                            <p>Robotic Process Automation (RPA), chatbots, and intelligent document processing.</p>
+                <div class="row g-4">
+                    <div class="col-md-4 reveal reveal-delay-1">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Analytics & Insights</h3>
+                                <p class="card-desc">AI-powered dashboards surface hidden patterns in business data,
+                                    enabling teams to act on predictive trends rather than lag indicators.</p>
+                                <div class="card-tools">
+                                    <a href="https://www.tableau.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Tableau AI</a>
+                                    <a href="https://powerbi.microsoft.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Power BI</a>
+                                    <a href="https://www.thoughtspot.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">ThoughtSpot</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card ai-card h-100">
-                        <div class="card-body text-center">
-                            <div class="icon-circle mx-auto mb-3">💼</div>
-                            <h5>Decision Making</h5>
-                            <p>AI-powered business intelligence tools like Tableau AI and Power BI.</p>
+                    <div class="col-md-4 reveal reveal-delay-2">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-cogs" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Process Automation</h3>
+                                <p class="card-desc">Robotic Process Automation combined with AI handles complex
+                                    rule-based
+                                    and judgment-driven tasks — freeing teams for higher-value work.</p>
+                                <div class="card-tools">
+                                    <a href="https://www.uipath.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">UiPath</a>
+                                    <a href="https://www.automationanywhere.com" target="_blank"
+                                        rel="noopener noreferrer" class="tool-tag">Automation Anywhere</a>
+                                    <a href="https://zapier.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Zapier AI</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- AI in Jobs -->
-        <section id="jobs" class="mb-5">
-            <h2 class="section-title text-center mb-5 display-5">AI in Jobs & Workforce</h2>
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="card ai-card h-100">
-                        <div class="card-body">
-                            <h5>Job Automation</h5>
-                            <p>AI is automating repetitive tasks in manufacturing, customer service, data entry, and
-                                logistics.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card ai-card h-100">
-                        <div class="card-body">
-                            <h5>New AI Jobs</h5>
-                            <p>Prompt Engineer, AI Trainer, AI Ethics Officer, Machine Learning Engineer, and more.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- AI for Job Seeking -->
-        <section id="job-seeking" class="mb-5 bg-light py-5 rounded-4">
-            <h2 class="section-title text-center mb-5 display-5">AI for Job Seeking</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card ai-card h-100 text-center">
-                        <div class="card-body">
-                            <h5>Resume Builders</h5>
-                            <p>Rezi, Kickresume, Teal HQ</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card ai-card h-100 text-center">
-                        <div class="card-body">
-                            <h5>Interview Prep</h5>
-                            <p>FinalRoundAI, Big Interview, Pramp</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card ai-card h-100 text-center">
-                        <div class="card-body">
-                            <h5>Job Matching</h5>
-                            <p>LinkedIn AI, Indeed AI, Eightfold</p>
+                    <div class="col-md-4 reveal reveal-delay-3">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-handshake-angle" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Sales & CRM Intelligence</h3>
+                                <p class="card-desc">AI embedded into customer relationship platforms scores leads,
+                                    drafts
+                                    follow-ups, and surfaces the deals most worth your attention this week.</p>
+                                <div class="card-tools">
+                                    <a href="https://www.salesforce.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Salesforce Einstein</a>
+                                    <a href="https://www.hubspot.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">HubSpot AI</a>
+                                    <a href="https://www.gong.io" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Gong</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- AI in Creativity -->
-        <section id="creativity" class="mb-5">
-            <h2 class="section-title text-center mb-5 display-5">AI in Creativity</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card ai-card h-100 text-center">
-                        <div class="card-body">
-                            <div class="icon-circle mx-auto mb-3">🎨</div>
-                            <h5>Image Generation</h5>
-                            <p>Midjourney, DALL·E, Flux, Leonardo</p>
-                        </div>
+        <!-- ═══════════════════════════════════ JOB SEEKING ═══════════════════════════════════ -->
+        <section id="job-seeking">
+            <div class="container">
+                <div class="row align-items-end mb-5 section-header">
+                    <div class="col-lg-6 reveal">
+                        <span class="section-eyebrow">03 / Domain</span>
+                        <h2 class="section-title">AI for Job Seeking</h2>
+                        <p class="section-desc">AI is leveling the playing field — helping candidates craft stronger
+                            applications, practise interviews, and surface the right opportunities faster.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card ai-card h-100 text-center">
-                        <div class="card-body">
-                            <div class="icon-circle mx-auto mb-3">🎵</div>
-                            <h5>Music & Audio</h5>
-                            <p>Suno, Udio, AIVA</p>
+                <div class="row g-4">
+                    <div class="col-md-4 reveal reveal-delay-1">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-file-alt" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">AI Resume Builders</h3>
+                                <p class="card-desc">Smart tools that tailor your CV to specific job descriptions,
+                                    optimise
+                                    for ATS systems, and highlight the experience that matters most to each role.</p>
+                                <div class="card-tools">
+                                    <a href="https://www.rezi.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Rezi</a>
+                                    <a href="https://www.tealhq.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Teal HQ</a>
+                                    <a href="https://www.jobscan.co" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Jobscan</a>
+                                    <a href="https://www.kickresume.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Kickresume</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card ai-card h-100 text-center">
-                        <div class="card-body">
-                            <div class="icon-circle mx-auto mb-3">✍️</div>
-                            <h5>Writing & Content</h5>
-                            <p>Claude, GPT-4o, Gemini, Grok</p>
+                    <div class="col-md-4 reveal reveal-delay-2">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-microphone" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Interview Preparation</h3>
+                                <p class="card-desc">AI mock interviewers simulate real technical and behavioural
+                                    interviews, providing detailed coaching on tone, clarity, and answer structure.</p>
+                                <div class="card-tools">
+                                    <a href="https://finalroundai.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">FinalRoundAI</a>
+                                    <a href="https://interviewing.io" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Interviewing.io</a>
+                                    <a href="https://yoodli.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Yoodli</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal reveal-delay-3">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-handshake" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Intelligent Job Matching</h3>
+                                <p class="card-desc">Algorithms that go far beyond keyword matching — surfacing roles
+                                    that
+                                    align with your skills, career trajectory, salary expectations, and culture fit.</p>
+                                <div class="card-tools">
+                                    <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">LinkedIn AI</a>
+                                    <a href="https://www.indeed.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Indeed AI</a>
+                                    <a href="https://eightfold.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Eightfold</a>
+                                    <a href="https://huntr.co" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Huntr</a>
+                                    <a href="https://simplify.jobs" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Simplify</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- AI in Research & Science -->
-        <section id="research" class="mb-5 bg-light py-5 rounded-4">
-            <h2 class="section-title text-center mb-5 display-5">AI in Research & Science</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card ai-card h-100 text-center">
-                        <div class="card-body">
-                            <h5>Drug Discovery</h5>
-                            <p>AlphaFold, Insilico Medicine</p>
-                        </div>
+        <!-- ═══════════════════════════════════ CREATIVITY ═══════════════════════════════════ -->
+        <section id="creativity" class="section-alt">
+            <div class="container">
+                <div class="row align-items-end mb-5 section-header">
+                    <div class="col-lg-6 reveal">
+                        <span class="section-eyebrow">04 / Domain</span>
+                        <h2 class="section-title">AI in Creativity</h2>
+                        <p class="section-desc">Generative AI has handed powerful creative tools to anyone with an idea
+                            —
+                            from visual artists and musicians to writers and game designers.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card ai-card h-100 text-center">
-                        <div class="card-body">
-                            <h5>Scientific Writing</h5>
-                            <p>Paperpal, Elicit, Scite</p>
+                <div class="row g-4">
+                    <div class="col-md-4 reveal reveal-delay-1">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-palette" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Image & Art Generation</h3>
+                                <p class="card-desc">Text-to-image models that can generate photorealistic scenes,
+                                    concept
+                                    art, illustrations, and abstract visuals from a simple description in seconds.</p>
+                                <div class="card-tools">
+                                    <a href="https://www.midjourney.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Midjourney</a>
+                                    <a href="https://openai.com/dall-e" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">DALL·E</a>
+                                    <a href="https://blackforestlabs.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Flux</a>
+                                    <a href="https://firefly.adobe.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Adobe Firefly</a>
+                                    <a href="https://leonardo.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Leonardo</a>
+                                    <a href="https://ideogram.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Ideogram</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card ai-card h-100 text-center">
-                        <div class="card-body">
-                            <h5>Data Analysis</h5>
-                            <p>DeepMind, Perplexity, ResearchRabbit</p>
+                    <div class="col-md-4 reveal reveal-delay-2">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-music" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Music Generation</h3>
+                                <p class="card-desc">AI composers that produce full tracks, harmonies, and instrumentals
+                                    from a genre or mood prompt — giving creators an infinite palette of sonic
+                                    inspiration.
+                                </p>
+                                <div class="card-tools">
+                                    <a href="https://suno.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Suno</a>
+                                    <a href="https://www.udio.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Udio</a>
+                                    <a href="https://aiva.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">AIVA</a>
+                                    <a href="https://www.soundraw.io" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Soundraw</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal reveal-delay-3">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-pen-nib" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Writing & Content Creation</h3>
+                                <p class="card-desc">Large language models that draft articles, scripts, stories, and
+                                    marketing copy — acting as a skilled co-author who never gets writer's block.</p>
+                                <div class="card-tools">
+                                    <a href="https://claude.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Claude</a>
+                                    <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">ChatGPT</a>
+                                    <a href="https://gemini.google.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Gemini</a>
+                                    <a href="https://x.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Grok</a>
+                                    <a href="https://www.jasper.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Jasper</a>
+                                    <a href="https://www.copy.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Copy.ai</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-    </div>
+        <!-- ═══════════════════════════════════ CODING & DEVELOPMENT ═══════════════════════════════════ -->
+        <section id="coding">
+            <div class="container">
+                <div class="row align-items-end mb-5 section-header">
+                    <div class="col-lg-6 reveal">
+                        <span class="section-eyebrow">05 / Domain</span>
+                        <h2 class="section-title">AI in Coding & Development</h2>
+                        <p class="section-desc">From inline autocomplete to full-stack agents that ship features, AI has
+                            become an inseparable pair-programmer for engineers at every skill level.</p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4 reveal reveal-delay-1">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-code" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">AI Coding Assistants</h3>
+                                <p class="card-desc">In-editor copilots that autocomplete code, refactor functions,
+                                    write
+                                    tests, and explain unfamiliar codebases line by line as you work.</p>
+                                <div class="card-tools">
+                                    <a href="https://github.com/features/copilot" target="_blank"
+                                        rel="noopener noreferrer" class="tool-tag">GitHub Copilot</a>
+                                    <a href="https://cursor.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Cursor</a>
+                                    <a href="https://codeium.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Codeium</a>
+                                    <a href="https://www.tabnine.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Tabnine</a>
+                                    <a href="https://aider.chat" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Aider</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal reveal-delay-2">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="card-title-text">AI App Builders</h3>
+                                <p class="card-desc">Prompt-to-app platforms that turn a plain English description into
+                                    a
+                                    working web application complete with UI, logic, and deployment in minutes.</p>
+                                <div class="card-tools">
+                                    <a href="https://v0.app" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">v0</a>
+                                    <a href="https://bolt.new" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Bolt</a>
+                                    <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Lovable</a>
+                                    <a href="https://replit.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Replit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal reveal-delay-3">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-terminal" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Agentic Dev Tools</h3>
+                                <p class="card-desc">Autonomous coding agents that operate from the terminal, navigate
+                                    large repositories, debug issues, and complete multi-step engineering tasks on
+                                    command.</p>
+                                <div class="card-tools">
+                                    <a href="https://claude.com/product/claude-code" target="_blank"
+                                        rel="noopener noreferrer" class="tool-tag">Claude Code</a>
+                                    <a href="https://www.warp.dev" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Warp</a>
+                                    <a href="https://aws.amazon.com/q/developer" target="_blank"
+                                        rel="noopener noreferrer" class="tool-tag">Amazon Q</a>
+                                    <a href="https://devin.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Devin</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-5 text-center">
+        <!-- ═══════════════════════════════════ VIDEO & VOICE ═══════════════════════════════════ -->
+        <section id="video-voice" class="section-alt">
+            <div class="container">
+                <div class="row align-items-end mb-5 section-header">
+                    <div class="col-lg-6 reveal">
+                        <span class="section-eyebrow">06 / Domain</span>
+                        <h2 class="section-title">AI in Video & Voice</h2>
+                        <p class="section-desc">Generative models now produce cinema-quality footage, broadcast-ready
+                            narration, and lifelike on-screen presenters — collapsing what once took whole production
+                            crews.</p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4 reveal reveal-delay-1">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-film" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Video Generation</h3>
+                                <p class="card-desc">Text-to-video and image-to-video models that render coherent,
+                                    photoreal scenes with camera motion, lighting, and physics directly from a prompt.
+                                </p>
+                                <div class="card-tools">
+                                    <a href="https://runwayml.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Runway</a>
+                                    <a href="https://pika.art" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Pika</a>
+                                    <a href="https://openai.com/sora" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Sora</a>
+                                    <a href="https://deepmind.google/technologies/veo" target="_blank"
+                                        rel="noopener noreferrer" class="tool-tag">Veo</a>
+                                    <a href="https://klingai.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Kling</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal reveal-delay-2">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-waveform-lines" aria-hidden="true"></i><i
+                                        class="fas fa-microphone-lines" aria-hidden="true" style="display:none;"></i>
+                                </div>
+                                <h3 class="card-title-text">Voice & Audio Synthesis</h3>
+                                <p class="card-desc">Neural voice models that clone, narrate, dub, and translate audio
+                                    with breath, emotion, and accent control — indistinguishable from human recording.
+                                </p>
+                                <div class="card-tools">
+                                    <a href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">ElevenLabs</a>
+                                    <a href="https://murf.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Murf</a>
+                                    <a href="https://www.resemble.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Resemble</a>
+                                    <a href="https://www.descript.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Descript</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal reveal-delay-3">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-user-tie" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">AI Avatars & Presenters</h3>
+                                <p class="card-desc">Synthetic on-camera hosts that lip-sync any script in dozens of
+                                    languages — used for training videos, marketing, and large-scale localisation.</p>
+                                <div class="card-tools">
+                                    <a href="https://www.heygen.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">HeyGen</a>
+                                    <a href="https://www.synthesia.io" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Synthesia</a>
+                                    <a href="https://www.d-id.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">D-ID</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FUN FACT CALLOUT -->
+        <div class="container py-5">
+            <div class="callout reveal">
+                <cite style="margin-bottom:0.75rem; display:block;">Fun Fact About AI</cite>
+                <p>Artificial intelligence isn't replacing human creativity — it's amplifying it, giving every person
+                    access
+                    to a collaborator that never sleeps and never runs out of ideas.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════ PRODUCTIVITY ═══════════════════════════════════ -->
+        <section id="productivity">
+            <div class="container">
+                <div class="row align-items-end mb-5 section-header">
+                    <div class="col-lg-6 reveal">
+                        <span class="section-eyebrow">07 / Domain</span>
+                        <h2 class="section-title">AI for Productivity</h2>
+                        <p class="section-desc">Quiet, everyday AI — sitting inside your notes, calendar, and inbox —
+                            compounds into hours of recovered focus every week without you ever opening a chat window.
+                        </p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4 reveal reveal-delay-1">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-note-sticky" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Notes & Knowledge</h3>
+                                <p class="card-desc">AI-native workspaces that summarise, link, and resurface your notes
+                                    —
+                                    turning scattered captures into a personal knowledge graph you can actually query.
+                                </p>
+                                <div class="card-tools">
+                                    <a href="https://www.notion.so" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Notion AI</a>
+                                    <a href="https://notebooklm.google.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">NotebookLM</a>
+                                    <a href="https://mem.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Mem</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal reveal-delay-2">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-microphone-lines" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Meetings & Transcription</h3>
+                                <p class="card-desc">Tools that silently join your calls, transcribe every word, and
+                                    ship
+                                    a summary with action items before the meeting ends — no more lost decisions.</p>
+                                <div class="card-tools">
+                                    <a href="https://otter.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Otter</a>
+                                    <a href="https://fireflies.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Fireflies</a>
+                                    <a href="https://www.granola.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Granola</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal reveal-delay-3">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-calendar-check" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Scheduling & Inbox</h3>
+                                <p class="card-desc">AI calendar and email layers that defend your focus time, draft
+                                    replies in your voice, and reshuffle your week around the priorities that actually
+                                    matter.</p>
+                                <div class="card-tools">
+                                    <a href="https://www.usemotion.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Motion</a>
+                                    <a href="https://reclaim.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Reclaim</a>
+                                    <a href="https://www.shortwave.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Shortwave</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════ RESEARCH ═══════════════════════════════════ -->
+        <section id="research" class="section-alt">
+            <div class="container">
+                <div class="row align-items-end mb-5 section-header">
+                    <div class="col-lg-6 reveal">
+                        <span class="section-eyebrow">08 / Domain</span>
+                        <h2 class="section-title">AI in Research & Science</h2>
+                        <p class="section-desc">AI is compressing decades of discovery into years — accelerating drug
+                            development, scientific literature review, and complex data modelling at unprecedented
+                            scale.
+                        </p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4 reveal reveal-delay-1">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-dna" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Drug Discovery & Biology</h3>
+                                <p class="card-desc">AI models predict protein structures and simulate molecular
+                                    interactions that would take traditional lab methods years, opening new frontiers in
+                                    medicine.</p>
+                                <div class="card-tools">
+                                    <a href="https://alphafold.ebi.ac.uk" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">AlphaFold</a>
+                                    <a href="https://insilico.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Insilico</a>
+                                    <a href="https://www.isomorphiclabs.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Isomorphic</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal reveal-delay-2">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-flask" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Research Assistants</h3>
+                                <p class="card-desc">AI tools that read and synthesise thousands of academic papers to
+                                    surface key findings, highlight contradictions, and identify research gaps
+                                    instantly.
+                                </p>
+                                <div class="card-tools">
+                                    <a href="https://elicit.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Elicit</a>
+                                    <a href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Perplexity</a>
+                                    <a href="https://scite.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Scite</a>
+                                    <a href="https://consensus.app" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Consensus</a>
+                                    <a href="https://scispace.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">SciSpace</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal reveal-delay-3">
+                        <div class="ai-card">
+                            <div class="card-body">
+                                <div class="card-icon"><i class="fas fa-atom" aria-hidden="true"></i></div>
+                                <h3 class="card-title-text">Discovery & Mapping</h3>
+                                <p class="card-desc">Deep learning systems that uncover signal in massive datasets and
+                                    visualise the structure of entire fields — from genomics to citation networks.</p>
+                                <div class="card-tools">
+                                    <a href="https://deepmind.google" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">DeepMind</a>
+                                    <a href="https://www.researchrabbit.ai" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">ResearchRabbit</a>
+                                    <a href="https://www.connectedpapers.com" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Connected Papers</a>
+                                    <a href="https://www.semanticscholar.org" target="_blank" rel="noopener noreferrer"
+                                        class="tool-tag">Semantic Scholar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
         <div class="container">
-            <h5>AIverse © 2026</h5>
-            <p>Exploring the Future of Artificial Intelligence</p>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="brand mb-2">Nexus AI</div>
+                    <div class="tagline mb-3">Connecting the Future of Artificial Intelligence</div>
+                    <p style="font-size:0.82rem; color:rgba(232,213,176,0.45); line-height:1.8; max-width:280px;">
+                        A curated directory of the most powerful AI tools across every domain of human activity.
+                    </p>
+                </div>
+                <div class="col-lg-3 col-md-6 offset-lg-1">
+                    <div class="footer-section-title">Domains</div>
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="#education" class="footer-link">Education</a>
+                            <a href="#business" class="footer-link">Business</a>
+                            <a href="#job-seeking" class="footer-link">Jobs</a>
+                            <a href="#creativity" class="footer-link">Creativity</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#coding" class="footer-link">Coding</a>
+                            <a href="#video-voice" class="footer-link">Video</a>
+                            <a href="#productivity" class="footer-link">Productivity</a>
+                            <a href="#research" class="footer-link">Research</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 offset-lg-1">
+                    <div class="footer-section-title">Highlights</div>
+                    <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" class="footer-link">Claude</a>
+                    <a href="https://cursor.com" target="_blank" rel="noopener noreferrer"
+                        class="footer-link">Cursor</a>
+                    <a href="https://www.midjourney.com" target="_blank" rel="noopener noreferrer"
+                        class="footer-link">Midjourney</a>
+                    <a href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer"
+                        class="footer-link">ElevenLabs</a>
+                    <a href="https://alphafold.ebi.ac.uk" target="_blank" rel="noopener noreferrer"
+                        class="footer-link">AlphaFold</a>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <p class="footer-copy mb-0">© 2026 Nexus AI · All Rights Reserved</p>
+                <p class="footer-copy mb-0">Curated with care for the curious mind</p>
+            </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Smooth scrolling for navbar links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                if (this.getAttribute('href') !== '#') {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
+        (function () {
+            'use strict';
+
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            /* ══════════════════════════════════════════
+               INTRO ANIMATION CONTROLLER
+               - Dismisses automatically after a short timeline
+               - Can be skipped instantly by click or keypress
+               - Respects prefers-reduced-motion (instant dismiss)
+            ══════════════════════════════════════════ */
+            const overlay = document.getElementById('intro-overlay');
+            const DISMISS_DELAY = prefersReducedMotion ? 0 : 2700;
+            const EXIT_DURATION = prefersReducedMotion ? 0 : 900;
+
+            let dismissed = false;
+            function dismissIntro() {
+                if (dismissed || !overlay) return;
+                dismissed = true;
+                overlay.classList.add('exit');
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    document.body.classList.remove('intro-active');
+                }, EXIT_DURATION);
+            }
+
+            // Auto-dismiss
+            setTimeout(dismissIntro, DISMISS_DELAY);
+
+            // Skip on interaction
+            overlay.addEventListener('click', dismissIntro);
+            window.addEventListener('keydown', dismissIntro, { once: true });
+
+            /* ══════════════════════════════════════════
+               RANDOM AI BUTTON
+               URL list is built from every .tool-tag in the DOM —
+               so adding a new tool requires NO JS edits.
+            ══════════════════════════════════════════ */
+            const toolLinks = Array.from(document.querySelectorAll('.tool-tag'))
+                .map(a => a.href)
+                .filter((url, i, arr) => arr.indexOf(url) === i); // de-dupe
+
+            const randomBtn = document.getElementById('random-ai-btn');
+            if (randomBtn && toolLinks.length) {
+                randomBtn.addEventListener('click', () => {
+                    const url = toolLinks[Math.floor(Math.random() * toolLinks.length)];
+                    window.open(url, '_blank', 'noopener,noreferrer');
+                });
+            }
+
+            /* ══════════════════════════════════════════
+               LIVE STATS — count actual content, not hard-coded numbers
+            ══════════════════════════════════════════ */
+            const setStat = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
+            };
+            setStat('stat-domains', document.querySelectorAll('main > section[id]').length - 1); // exclude hero
+            setStat('stat-tools', toolLinks.length + '+');
+            setStat('stat-usecases', document.querySelectorAll('.ai-card').length);
+
+            /* ══════════════════════════════════════════
+               NAVBAR SHADOW + BACK-TO-TOP VISIBILITY
+            ══════════════════════════════════════════ */
+            const navbar = document.getElementById('navbar');
+            const backTop = document.getElementById('back-top');
+
+            window.addEventListener('scroll', () => {
+                navbar.classList.toggle('scrolled', window.scrollY > 60);
+                backTop.classList.toggle('visible', window.scrollY > 400);
+            }, { passive: true });
+
+            backTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
             });
-        });
+
+            /* ══════════════════════════════════════════
+               SCROLL REVEAL — IntersectionObserver, one-shot
+            ══════════════════════════════════════════ */
+            if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+                const revealObs = new IntersectionObserver((entries) => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) {
+                            e.target.classList.add('visible');
+                            revealObs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.12 });
+                document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+            } else {
+                // Fallback: just show everything
+                document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+            }
+        })();
     </script>
 </body>
 
